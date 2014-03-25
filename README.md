@@ -150,6 +150,8 @@ The following attributes are used for the Nagios server
 * `node['nagios']['server']['templates']['hostgroups']['cookbook']` - Sets from what cookbook the hostgroups.cfg.erb template should come from. Defaults to this cookbook.
 * `node['nagios']['server']['templates']['hosts']['cookbook']`  - Sets from what cookbook the hosts.cfg.erb template should come from. Defaults to this cookbook.
 * `node['nagios']['server']['templates']['servicedependencies']['cookbook']`  - Sets from what cookbook the servicedependencies.cfg.erb template should come from. Defaults to this cookbook.
+* `node['nagios']['server']['manual_start']` -   Defaults to false. If enabled, you need to provide the service resource that starts it. 
+
 
 These set directives in the default host template. Unless explicitly
 overridden, they will be inheirited by the host definitions for each

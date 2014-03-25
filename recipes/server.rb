@@ -320,10 +320,12 @@ nagios_conf 'servicedependencies' do
             :custom_vars => node['nagios']['server']['templates']['servicedependencies']['vars'])
 end
 
-service 'nagios' do
-  service_name nagios_service_name
-  supports :status => true, :restart => true, :reload => true
-  action [:enable, :start]
+unless node['nagios']['server']['manual_start']
+  service 'nagios' do
+    service_name nagios_service_name
+    supports :status => true, :restart => true, :reload => true
+    action [:enable, :start]
+  end
 end
 
 # Add the NRPE check to monitor the Nagios server

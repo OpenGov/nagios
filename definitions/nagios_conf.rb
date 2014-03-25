@@ -33,7 +33,7 @@ define :nagios_conf, :variables => {}, :config_subdir => true, :source => nil, :
     cookbook params[:cookbook]
     mode 00644
     variables params[:variables]
-    notifies :reload, 'service[nagios]'
+    notifies :reload, 'service[nagios]', :delayed
     backup 0
   end
 end
