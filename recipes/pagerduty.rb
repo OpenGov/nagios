@@ -1,5 +1,6 @@
 #
 # Author:: Jake Vanderdray <jvanderdray@customink.com>
+# Author:: Tim Smith <tsmith@limelight.com>
 # Cookbook Name:: nagios
 # Recipe:: pagerduty
 #
@@ -56,7 +57,7 @@ end
 remote_file "#{node['nagios']['plugin_dir']}/notify_pagerduty.pl" do
   owner 'root'
   group 'root'
-  mode 00755
+  mode '0755'
   source node['nagios']['pagerduty']['script_url']
   action :create_if_missing
 end

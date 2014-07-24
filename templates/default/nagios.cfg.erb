@@ -26,6 +26,9 @@ lock_file=<%= node['nagios']['run_dir'] %>/<%= node['nagios']['server']['vname']
 temp_file=<%= node['nagios']['cache_dir'] %>/<%= node['nagios']['server']['name'] %>.tmp
 temp_path=/tmp
 event_broker_options=-1
+<% node['nagios']['brokers'].each do |brokerPath, brokerConfig| -%>
+broker_module=<%= brokerPath %> <%= brokerConfig %>
+<% end -%>
 
 log_rotation_method=d
 log_archive_path=<%= node['nagios']['log_dir'] %>/archives
@@ -82,10 +85,10 @@ interval_length=<%= node['nagios']['interval_length'] %>
 
 use_aggressive_host_checking=0
 
-execute_service_checks=1
-accept_passive_service_checks=1
-execute_host_checks=1
-accept_passive_host_checks=1
+execute_service_checks=<%= node['nagios']['execute_service_checks'] %>
+accept_passive_service_checks=<%= node['nagios']['accept_passive_service_checks'] %>
+execute_host_checks=<%= node['nagios']['execute_host_checks'] %>
+accept_passive_host_checks=<%= node['nagios']['accept_passive_host_checks'] %>
 
 enable_notifications=<%= node['nagios']['notifications_enabled'] %>
 enable_event_handlers=1
@@ -107,10 +110,18 @@ process_performance_data=<%= node['nagios']['conf']['process_performance_data'] 
 #host_perfdata_file_processing_command=process-host-perfdata-file
 #service_perfdata_file_processing_command=process-service-perfdata-file
 
-obsess_over_services=0
+obsess_over_services=<%= node['nagios']['obsess_over_services'] %>
+<% if node['nagios']['ocsp_command'] -%>
+oscp_command='<%= node['nagios']['ocsp_command'] %>'
+<% else -%>
 #ocsp_command=somecommand
-obsess_over_hosts=0
+<% end -%>
+obsess_over_hosts=<%= node['nagios']['obsess_over_hosts'] %>
+<% if node['nagios']['ochp_command'] -%>
+ochp_command='<%= node['nagios']['ochp_command'] %>'
+<% else -%>
 #ochp_command=somecommand
+<% end -%>
 translate_passive_host_checks=0
 passive_host_checks_are_soft=0
 check_for_orphaned_services=1
