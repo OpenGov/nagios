@@ -11,9 +11,11 @@ recipe 'nagios::client', 'Installs and configures a nrpe client'
 recipe 'nagios::server', 'Installs and configures a nagios server'
 recipe 'nagios::pagerduty', 'Integrates contacts w/ PagerDuty API'
 
-%w{ apache2 build-essential php nginx nginx_simplecgi yum-epel }.each do |cb|
-  depends cb
-end
+depends 'apache2', '= 2.0.0'
+depends 'build-essential', '= 2.0.6'
+depends 'php', '= 1.3.0'
+depends 'nginx, '= 1.8.0'
+depends 'nginx_simplecgi', '= 0.1.2'
 
 %w{ debian ubuntu redhat centos fedora scientific amazon oracle}.each do |os|
   supports os
