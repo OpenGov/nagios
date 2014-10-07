@@ -16,6 +16,7 @@ depends 'build-essential', '= 2.0.6'
 depends 'php', '= 1.3.0'
 depends 'nginx, '= 1.8.0'
 depends 'nginx_simplecgi', '= 0.1.2'
+depends 'yum-epel'
 
 %w{ debian ubuntu redhat centos fedora scientific amazon oracle}.each do |os|
   supports os
