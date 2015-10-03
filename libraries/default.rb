@@ -1,5 +1,6 @@
 #
 # Author:: Joshua Sierles <joshua@37signals.com>
+# Author:: Tim Smith <tim@cozy.co>
 # Cookbook Name:: nagios
 # Library:: default
 #
@@ -32,6 +33,36 @@ def nagios_interval(seconds)
   interval
 end
 
+def nagios_array(exp)
+  return [] if exp.nil?
+  case exp
+  when Array
+    exp
+  when String
+    [exp]
+  end
+end
+
+def nagios_action_delete?(action)
+  if action.is_a?(Symbol)
+    return true if action == :delete || action == :remove
+  elsif action.is_a?(Array)
+    return true if action.include?(:delete) || action.include?(:remove)
+  else
+    return false
+  end
+end
+
+def nagios_action_create?(action)
+  if action.is_a?(Symbol)
+    return true if action == :create || action == :add
+  elsif action.is_a?(Array)
+    return true if action.include?(:create) || action.include?(:add)
+  else
+    return false
+  end
+end
+
 def nagios_attr(name)
   node['nagios'][name]
 end
@@ -44,11 +75,14 @@ end
 # if the cloud IP is nil then use the standard IP address attribute.  This is a work around
 #   for OHAI incorrectly identifying systems on Cisco hardware as being in Rackspace
 def ip_to_monitor(monitored_host, server_host = node)
+  # if interface to monitor is specified implicitly use that
+  if node['nagios']['monitoring_interface'] && node['network']["ipaddress_#{node['nagios']['monitoring_interface']}"]
+    node['network']["ipaddress_#{node['nagios']['monitoring_interface']}"]
   # if server is not in the cloud and the monitored host is
-  if server_host['cloud'].nil? && !monitored_host['cloud'].nil?
+  elsif server_host['cloud'].nil? && monitored_host['cloud']
     monitored_host['cloud']['public_ipv4'].include?('.') ? monitored_host['cloud']['public_ipv4'] : monitored_host['ipaddress']
   # if server host is in the cloud and the monitored node is as well, but they are not on the same provider
-  elsif !server_host['cloud'].nil? && !monitored_host['cloud'].nil? && monitored_host['cloud']['provider'] != server_host['cloud']['provider']
+  elsif server_host['cloud'] && monitored_host['cloud'] && monitored_host['cloud']['provider'] != server_host['cloud']['provider']
     monitored_host['cloud']['public_ipv4'].include?('.') ? monitored_host['cloud']['public_ipv4'] : monitored_host['ipaddress']
   else
     monitored_host['ipaddress']
