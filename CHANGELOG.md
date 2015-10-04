@@ -1,6 +1,12 @@
 nagios Cookbook CHANGELOG
 =========================
 This file is used to list changes made in each version of the nagios cookbook.
+7.2.99
+-----
+### Improvement
+- Enabled performance metrics
+- Added custom node search ability
+
 7.2.2
 -----
 ### Bug
@@ -26,8 +32,8 @@ This file is used to list changes made in each version of the nagios cookbook.
 - Fixing the services databag filter on environment.
 
 ### Improvement
-- Moving the LWRP's providers into definitions.  
-  This will remove some extra complexity and output will be  
+- Moving the LWRP's providers into definitions.
+  This will remove some extra complexity and output will be
   much nicer and debugging will be easier during the chef-converge.
 
 7.1.6
@@ -50,7 +56,7 @@ This file is used to list changes made in each version of the nagios cookbook.
 ### Improvement
 - Made test config os (in)dependent.
 - Added zap for config file cleanup.
-- Added encrypted user databag support. 
+- Added encrypted user databag support.
 - Added extra configuration tests.
 - Added gitter badge.
 

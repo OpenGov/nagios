@@ -156,6 +156,8 @@ Example: `default['nagios']['conf']['cfg_dir'] = [ '/etc/nagios/conf.d' , '/usr/
  * `node['nagios']['cgi']['lock_author_names']`                         - Defaults to 1
 
 
+* `node['nagios']['nodes_search_query']` - The search query for finding all the nodes you want the nagios server to check. Defaults to "hostname:* AND chef_environment:#{node.chef_environment}". However, if you set the node['nagios']['multi_environment_monitoring'] to true, it will always be "hostname:*".
+
 Recipes
 -------
 ### default

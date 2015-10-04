@@ -29,7 +29,7 @@ hostgroups.each do |group|
     end.join(' OR ')
     result = search(:node, "(#{group['search_query']}) AND (#{query_environments})")
   else
-    result = search(:node, "#{group['search_query']} AND chef_environment:#{node.chef_environment}")
+    result = search(:node, node['nagios']['nodes_search_query'])
   end
 
   result.each do |n|
@@ -143,7 +143,7 @@ end
 
 unmanaged_hosts = nagios_bags.get(node['nagios']['unmanagedhosts_databag'])
 unmanaged_hosts.each do |item|
-  next unless item['environment'].nil? || item['environment'] == node.chef_environment
+  next if item['environment'].nil? || item['environment'] != node.chef_environment
   name = item['host_name'] || item['id']
   nagios_host name do
     options item
