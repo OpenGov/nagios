@@ -168,6 +168,8 @@ default['nagios']['ldap_authoritative'] = nil
 
 default['nagios']['templates']       = Mash.new
 
+default['nagios']['nodes_search_query'] = "hostname:* AND chef_environment:#{node.chef_environment}"
+
 # This setting is effectively sets the minimum interval (in seconds) nagios can handle.
 # Other interval settings provided in seconds will calculate their actual from this value, since nagios works in 'time units' rather than allowing definitions everywhere in seconds
 default['nagios']['interval_length'] = 1

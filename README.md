@@ -83,6 +83,8 @@ Example: `default['nagios']['conf']['cfg_dir'] = [ '/etc/nagios/conf.d' , '/usr/
 *  `node['nagios']['url']` - URL to host Nagios from - defaults to nil and instead uses  FQDN
 
 * `node['nagios']['conf']['enable_notifications']` - set to 1 to enable notification.
+* `node['nagios']['conf']['interval_length']` - minimum interval. Defaults to '1'.
+
 * `node['nagios']['check_external_commands']`
 * `node['nagios']['default_contact_groups']`
 * `node['nagios']['sysadmin_email']` - default notification email.
@@ -114,7 +116,6 @@ Example: `default['nagios']['conf']['cfg_dir'] = [ '/etc/nagios/conf.d' , '/usr/
 * `node['nagios']['large_installation_tweaks']` - Attribute to enable [large installation tweaks](http://nagios.sourceforge.net/docs/3_0/largeinstalltweaks.html). Defaults to 0.
 * `node['nagios']['templates']` - These set directives in the default host template. Unless explicitly overridden, they will be inherited by the host definitions for each discovered node and `nagios_unmanagedhosts` data bag. For more information about these directives, see the Nagios documentation for [host definitions](http://nagios.sourceforge.net/docs/3_0/objectdefinitions.html#host).
 * `node['nagios']['hosts_template']` - Host template you want to inherit properties/variables from, default 'server'. For more information, see the nagios doc on [Object Inheritance](http://nagios.sourceforge.net/docs/3_0/objectinheritance.html).
-* `node['nagios']['interval_length']` - minimum interval.
 * `node['nagios']['brokers']` - Hash of broker modules to include in the config. Hash key is the path to the broker module, the value is any parameters to pass to it.
 
 
@@ -155,6 +156,8 @@ Example: `default['nagios']['conf']['cfg_dir'] = [ '/etc/nagios/conf.d' , '/usr/
  * `node['nagios']['cgi']['notes_url_target']`                          - Defaults to '_blank'
  * `node['nagios']['cgi']['lock_author_names']`                         - Defaults to 1
 
+
+* `node['nagios']['nodes_search_query']` - The search query for finding all the nodes you want the nagios server to check. Defaults to "hostname:* AND chef_environment:#{node.chef_environment}". However, if you set the node['nagios']['multi_environment_monitoring'] to true, it will always be "hostname:*".
 
 Recipes
 -------
