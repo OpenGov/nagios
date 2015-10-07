@@ -95,6 +95,11 @@ nagios_command 'host_notify_by_sms_email' do
   options 'command_line' => '/usr/bin/printf "%b" "$HOSTALIAS$ $NOTIFICATIONTYPE$ $HOSTSTATE$\n\n$HOSTOUTPUT$" | ' + node['nagios']['server']['mail_command'] + ' -s "$HOSTALIAS$ $HOSTSTATE$!" $CONTACTPAGER$'
 end
 
+# service_notify_by_sms_email command
+nagios_command 'service_notify_by_sms_email' do
+  options 'command_line' => '/usr/bin/printf "%b" "$SERVICEDESC$ $NOTIFICATIONTYPE$ $SERVICESTATE$\n\n$SERVICEOUTPUT$" | ' + node['nagios']['server']['mail_command'] + ' -s "$HOSTALIAS$ $SERVICEDESC$ $SERVICESTATE$!" $CONTACTPAGER$'
+end
+
 # root contact
 nagios_contact 'root' do
   options 'alias'                         => 'Root',
@@ -127,20 +132,6 @@ nagios_contact 'default-contact' do
           'service_notification_commands'   => 'service_notify_by_email',
           'host_notification_commands'      => 'host_notify_by_email'
 end
-
-# This was taken from the origional cookbook, but cannot find the
-# commands service-notify-by-sms-gateway and host-notify-by-sms-gateway
-# anywhere defined, so skipping this here.
-#
-# nagios_contact 'sms-contact' do
-#   options 'name'                          => 'sms-contact',
-#           'service_notification_period'   => '24x7',
-#           'host_notification_period'      => '24x7',
-#           'service_notification_options'  => 'w,u,c,r,f',
-#           'host_notification_options'     => 'd,u,r,f,s',
-#           'service_notification_commands' => 'service-notify-by-sms-gateway',
-#           'host_notification_commands'    => 'host-notify-by-sms-gateway'
-# end
 
 nagios_host 'default-host' do
   options 'name'                         => 'default-host',
